@@ -1,0 +1,29 @@
+import * as api from './api/api';
+import * as angular from 'angular';
+
+{{#apiInfo}}
+const apiModule = angular.module('api', [])
+{{#apis}}
+{{#operations}}
+.service('{{classname}}', api.{{classname}})
+{{#operation}}
+ export const {{nickname}} =
+     async (
+       param: Params{{nickname}},
+     ) => {
+       const path = '';
+       const url = basePath + path;
+       return request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
+         {
+           url,
+           data: { param },
+         },
+       );
+     };
+{{/operation}}
+
+{{/operations}}
+{{/apis}}
+
+export default apiModule;
+{{/apiInfo}}

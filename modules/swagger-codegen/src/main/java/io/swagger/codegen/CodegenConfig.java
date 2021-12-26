@@ -49,9 +49,21 @@ public interface CodegenConfig {
 
     String modelPackage();
 
+    String dvaModelFileFolder();
+
+    // String dvaModelTestFileFolder();
+
+    // String dvaModelDocFileFolder();
+
+    String dvaModelPackage();
+
     String toApiName(String name);
 
     String toApiVarName(String name);
+
+    String toDvaModelName(String name);
+
+    String toDvaModelVarName(String name);
 
     String toModelName(String name);
 
@@ -91,9 +103,11 @@ public interface CodegenConfig {
 
     CodegenModel fromModel(String name, Model model, Map<String, Model> allDefinitions);
 
-    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions, Swagger swagger);
+    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation,
+            Map<String, Model> definitions, Swagger swagger);
 
-    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation, Map<String, Model> definitions);
+    CodegenOperation fromOperation(String resourcePath, String httpMethod, Operation operation,
+            Map<String, Model> definitions);
 
     List<CodegenSecurity> fromSecurity(Map<String, SecuritySchemeDefinition> schemes);
 
@@ -107,13 +121,19 @@ public interface CodegenConfig {
 
     Map<String, String> apiTemplateFiles();
 
+    Map<String, String> dvaModelTemplateFiles();
+
     Map<String, String> modelTemplateFiles();
 
     Map<String, String> apiTestTemplateFiles();
 
+    Map<String, String> dvaModelTestTemplateFiles();
+
     Map<String, String> modelTestTemplateFiles();
 
     Map<String, String> apiDocTemplateFiles();
+
+    Map<String, String> dvaModelDocTemplateFiles();
 
     Map<String, String> modelDocTemplateFiles();
 
@@ -131,13 +151,19 @@ public interface CodegenConfig {
 
     String toApiFilename(String name);
 
+    String toDvaModelFilename(String name);
+
     String toModelFilename(String name);
 
     String toApiTestFilename(String name);
 
+    String toDvaModelTestFilename(String name);
+
     String toModelTestFilename(String name);
 
     String toApiDocFilename(String name);
+
+    String toDvaModelDocFilename(String name);
 
     String toModelDocFilename(String name);
 
@@ -145,7 +171,10 @@ public interface CodegenConfig {
 
     String toApiImport(String name);
 
-    void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co, Map<String, List<CodegenOperation>> operations);
+    String toDvaModelImport(String name);
+
+    void addOperationToGroup(String tag, String resourcePath, Operation operation, CodegenOperation co,
+            Map<String, List<CodegenOperation>> operations);
 
     Map<String, Object> postProcessAllModels(Map<String, Object> objs);
 
@@ -163,11 +192,17 @@ public interface CodegenConfig {
 
     String apiFilename(String templateName, String tag);
 
+    String dvaModelFilename(String templateName, String tag);
+
     String modelFilename(String templateName, String modelName);
 
     String apiTestFilename(String templateName, String tag);
 
+    String dvaModelTestFilename(String templateName, String tag);
+
     String apiDocFilename(String templateName, String tag);
+
+    String dvaModelDocFilename(String templateName, String tag);
 
     boolean shouldOverwrite(String filename);
 

@@ -1,0 +1,3206 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "unknown",
+    "version": "last",
+    "description": "unknown"
+  },
+  "basePath": "",
+  "tags": [
+    {
+      "name": "DriverClockApi",
+      "description": "DriverClockApi"
+    },
+    {
+      "name": "DictionaryService",
+      "description": "DictionaryService"
+    },
+    {
+      "name": "AuditRuleService",
+      "description": "AuditRuleService"
+    },
+    {
+      "name": "RuleLogService",
+      "description": "RuleLogService"
+    },
+    {
+      "name": "AuditRecordService",
+      "description": "AuditRecordService"
+    },
+    {
+      "name": "SystemRuleService",
+      "description": "SystemRuleService"
+    },
+    {
+      "name": "AuditRecordCheckService",
+      "description": "AuditRecordCheckService"
+    },
+    {
+      "name": "SystemAuditRecordApi",
+      "description": "SystemAuditRecordApi"
+    }
+  ],
+  "schemes": [
+    "http"
+  ],
+  "paths": {
+    "/DriverClockApi/AuditDriverClock": {
+      "post": {
+        "tags": [
+          "DriverClockApi"
+        ],
+        "summary": "司机站点打卡",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "DriverClockApiAuditDriverClockBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "lat": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "打卡纬度"
+                },
+                "lon": {
+                  "type": "number",
+                  "format": "double",
+                  "description": "打卡经度"
+                },
+                "siteIdList": {
+                  "type": "array",
+                  "description": "站点id",
+                  "items": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                },
+                "tenantId": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "租户ID"
+                },
+                "waybillId": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "运单id"
+                }
+              },
+              "title": "DriverClockApiAuditDriverClockBody",
+              "$$ref": "#/definitions/司机网货站点打卡请求参数"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "siteId": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "/DriverClockApi/AuditDriverClockResponseData",
+                  "$$ref": "#/definitions/DriverClockSiteDTO"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/DriverClockApi/AuditDriverClockResponse",
+              "$$ref": "#/definitions/Response«DriverClockSiteDTO»"
+            }
+          }
+        }
+      }
+    },
+    "/DictionaryService/GetCustomAuditRule": {
+      "post": {
+        "tags": [
+          "DictionaryService"
+        ],
+        "summary": "查询自定义审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "DictionaryServiceGetCustomAuditRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pageNum": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "title": "DictionaryServiceGetCustomAuditRuleBody",
+              "$$ref": "#/definitions/AuditRuleDictParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "code": {
+                            "type": "string",
+                            "description": "规则id"
+                          },
+                          "name": {
+                            "type": "string",
+                            "description": "规则名称"
+                          }
+                        },
+                        "title": "/DictionaryService/GetCustomAuditRuleResponseDataListItem",
+                        "$$ref": "#/definitions/规则字典"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "/DictionaryService/GetCustomAuditRuleResponseData",
+                  "$$ref": "#/definitions/PageData«规则字典»"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/DictionaryService/GetCustomAuditRuleResponse",
+              "$$ref": "#/definitions/Response«PageData«规则字典»»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRuleService/AddRule": {
+      "post": {
+        "tags": [
+          "AuditRuleService"
+        ],
+        "summary": "新增审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRuleServiceAddRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "auditAllRuleConfig"
+              ],
+              "properties": {
+                "auditAllRuleConfig": {
+                  "type": "object",
+                  "properties": {
+                    "commonRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "impactPayment": {
+                          "type": "boolean",
+                          "description": "未通过是否影响支付"
+                        },
+                        "ruleName": {
+                          "type": "string",
+                          "description": "规则名称"
+                        }
+                      },
+                      "title": "CommonRuleConfig",
+                      "$$ref": "#/definitions/公共配置"
+                    },
+                    "driverRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "carModelCheck": {
+                          "type": "boolean",
+                          "description": "车型校验：驾驶证中不含AB的司机无法驾驶黄牌车"
+                        },
+                        "driverCertCheck": {
+                          "type": "boolean",
+                          "description": "司机信息认证(仅对网货运单有效)"
+                        },
+                        "driverContractCheck": {
+                          "type": "boolean",
+                          "description": "司机合同签署校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该司机在同一时间段不允许承运多个运单"
+                        }
+                      },
+                      "title": "DriverRuleConfig",
+                      "$$ref": "#/definitions/司机校验"
+                    },
+                    "transportTimeLimitRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "departureTimeLimit": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "超过要求发车时间(单位：分钟)"
+                        },
+                        "departureTimeLimitCheck": {
+                          "type": "boolean",
+                          "description": "超过要求发车时间(单位：分钟)是否生效"
+                        },
+                        "noCheckWhenNoneTransportTime": {
+                          "type": "boolean",
+                          "description": "未输入时效不校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "timeLimitCheck": {
+                          "type": "boolean",
+                          "description": "承运及时性是否生效"
+                        },
+                        "timeLimitEnd": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍结束"
+                        },
+                        "timeLimitStart": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍开始"
+                        },
+                        "useSystemCalcTransportTime": {
+                          "type": "boolean",
+                          "description": "使用系统智能计算时效"
+                        }
+                      },
+                      "title": "TransportTimeLimitRuleConfig",
+                      "$$ref": "#/definitions/运输时效"
+                    },
+                    "transportTrackRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "punchInRadius": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "默认电子围栏半径（km）"
+                        },
+                        "punchInRadiusCheck": {
+                          "type": "boolean",
+                          "description": "默认电子围栏半径（km）是否生效"
+                        },
+                        "punchInRadiusRegions": {
+                          "type": "array",
+                          "description": "默认电子围栏半径（km）",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "cityCode": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "cityName": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "countCode": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "countName": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "provinceCode": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "provinceName": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "radius": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "电子围栏半径（km）"
+                              }
+                            },
+                            "title": "PunchInRadiusRegionsItem",
+                            "$$ref": "#/definitions/电子围栏高级设置"
+                          }
+                        },
+                        "trackComplianceCheck": {
+                          "type": "boolean",
+                          "description": "轨迹合规性是否生效"
+                        },
+                        "trackComplianceContinuousTime": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackComplianceSpeed": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackCoverage": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "轨迹覆盖率"
+                        },
+                        "trackCoverageCheck": {
+                          "type": "boolean",
+                          "description": "轨迹覆盖率是否生效"
+                        }
+                      },
+                      "title": "TransportTrackRuleConfig",
+                      "$$ref": "#/definitions/运输轨迹"
+                    },
+                    "vehicleRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该车辆在同一时间段不允许承运多个运单"
+                        },
+                        "sameCarCheck": {
+                          "type": "boolean",
+                          "description": "承运校验：限制使用与客户名称一致的车辆"
+                        },
+                        "vehicleTypeCheck": {
+                          "type": "boolean",
+                          "description": "车辆性质校验是否生效"
+                        },
+                        "vehicleTypes": {
+                          "type": "array",
+                          "description": "车辆性质",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string",
+                                "description": "车辆性质code"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "车辆性质名称，如货运"
+                              }
+                            },
+                            "title": "VehicleTypesItem",
+                            "$$ref": "#/definitions/车辆类型"
+                          }
+                        },
+                        "vehicleVertCheck": {
+                          "type": "boolean",
+                          "description": "车辆信息认证(仅对网货运单有效)"
+                        }
+                      },
+                      "title": "VehicleRuleConfig",
+                      "$$ref": "#/definitions/车辆校验"
+                    },
+                    "waybillFeeRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "perKilometerLimit": {
+                          "type": "array",
+                          "description": "单公里运费限制",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "end": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "截止公里数"
+                              },
+                              "freightPerKilometer": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "每公里运费（分）"
+                              },
+                              "start": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "起始公里数"
+                              }
+                            },
+                            "title": "PerKilometerLimitItem",
+                            "$$ref": "#/definitions/每公里运费限制"
+                          }
+                        },
+                        "perKilometerLimitCheck": {
+                          "type": "boolean",
+                          "description": "单公里运费限制是否生效"
+                        },
+                        "totalFeeLimit": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "运费总金额（包括异常费用）限制"
+                        },
+                        "totalFeeLimitCheck": {
+                          "type": "boolean",
+                          "description": "运费总金额（包括异常费用）限制是否生效"
+                        }
+                      },
+                      "title": "WaybillFeeRuleConfig",
+                      "$$ref": "#/definitions/运费审验"
+                    }
+                  },
+                  "title": "AuditAllRuleConfig",
+                  "$$ref": "#/definitions/审验规则配置"
+                }
+              },
+              "title": "AuditRuleServiceAddRuleBody",
+              "$$ref": "#/definitions/新增审验规则"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/AuditRuleService/AddRuleResponseData"
+                }
+              },
+              "title": "/AuditRuleService/AddRuleResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRuleService/UpdateRule": {
+      "post": {
+        "tags": [
+          "AuditRuleService"
+        ],
+        "summary": "更新审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRuleServiceUpdateRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "auditAllRuleConfig",
+                "id"
+              ],
+              "properties": {
+                "auditAllRuleConfig": {
+                  "type": "object",
+                  "properties": {
+                    "commonRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "impactPayment": {
+                          "type": "boolean",
+                          "description": "未通过是否影响支付"
+                        },
+                        "ruleName": {
+                          "type": "string",
+                          "description": "规则名称"
+                        }
+                      },
+                      "title": "CommonRuleConfig",
+                      "$$ref": "#/definitions/公共配置"
+                    },
+                    "driverRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "carModelCheck": {
+                          "type": "boolean",
+                          "description": "车型校验：驾驶证中不含AB的司机无法驾驶黄牌车"
+                        },
+                        "driverCertCheck": {
+                          "type": "boolean",
+                          "description": "司机信息认证(仅对网货运单有效)"
+                        },
+                        "driverContractCheck": {
+                          "type": "boolean",
+                          "description": "司机合同签署校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该司机在同一时间段不允许承运多个运单"
+                        }
+                      },
+                      "title": "DriverRuleConfig",
+                      "$$ref": "#/definitions/司机校验"
+                    },
+                    "transportTimeLimitRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "departureTimeLimit": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "超过要求发车时间(单位：分钟)"
+                        },
+                        "departureTimeLimitCheck": {
+                          "type": "boolean",
+                          "description": "超过要求发车时间(单位：分钟)是否生效"
+                        },
+                        "noCheckWhenNoneTransportTime": {
+                          "type": "boolean",
+                          "description": "未输入时效不校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "timeLimitCheck": {
+                          "type": "boolean",
+                          "description": "承运及时性是否生效"
+                        },
+                        "timeLimitEnd": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍结束"
+                        },
+                        "timeLimitStart": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍开始"
+                        },
+                        "useSystemCalcTransportTime": {
+                          "type": "boolean",
+                          "description": "使用系统智能计算时效"
+                        }
+                      },
+                      "title": "TransportTimeLimitRuleConfig",
+                      "$$ref": "#/definitions/运输时效"
+                    },
+                    "transportTrackRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "punchInRadius": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "默认电子围栏半径（km）"
+                        },
+                        "punchInRadiusCheck": {
+                          "type": "boolean",
+                          "description": "默认电子围栏半径（km）是否生效"
+                        },
+                        "punchInRadiusRegions": {
+                          "type": "array",
+                          "description": "默认电子围栏半径（km）",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "cityCode": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "cityName": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "countCode": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "countName": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "provinceCode": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "provinceName": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "radius": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "电子围栏半径（km）"
+                              }
+                            },
+                            "title": "PunchInRadiusRegionsItem",
+                            "$$ref": "#/definitions/电子围栏高级设置"
+                          }
+                        },
+                        "trackComplianceCheck": {
+                          "type": "boolean",
+                          "description": "轨迹合规性是否生效"
+                        },
+                        "trackComplianceContinuousTime": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackComplianceSpeed": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackCoverage": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "轨迹覆盖率"
+                        },
+                        "trackCoverageCheck": {
+                          "type": "boolean",
+                          "description": "轨迹覆盖率是否生效"
+                        }
+                      },
+                      "title": "TransportTrackRuleConfig",
+                      "$$ref": "#/definitions/运输轨迹"
+                    },
+                    "vehicleRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该车辆在同一时间段不允许承运多个运单"
+                        },
+                        "sameCarCheck": {
+                          "type": "boolean",
+                          "description": "承运校验：限制使用与客户名称一致的车辆"
+                        },
+                        "vehicleTypeCheck": {
+                          "type": "boolean",
+                          "description": "车辆性质校验是否生效"
+                        },
+                        "vehicleTypes": {
+                          "type": "array",
+                          "description": "车辆性质",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string",
+                                "description": "车辆性质code"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "车辆性质名称，如货运"
+                              }
+                            },
+                            "title": "VehicleTypesItem",
+                            "$$ref": "#/definitions/车辆类型"
+                          }
+                        },
+                        "vehicleVertCheck": {
+                          "type": "boolean",
+                          "description": "车辆信息认证(仅对网货运单有效)"
+                        }
+                      },
+                      "title": "VehicleRuleConfig",
+                      "$$ref": "#/definitions/车辆校验"
+                    },
+                    "waybillFeeRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "perKilometerLimit": {
+                          "type": "array",
+                          "description": "单公里运费限制",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "end": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "截止公里数"
+                              },
+                              "freightPerKilometer": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "每公里运费（分）"
+                              },
+                              "start": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "起始公里数"
+                              }
+                            },
+                            "title": "PerKilometerLimitItem",
+                            "$$ref": "#/definitions/每公里运费限制"
+                          }
+                        },
+                        "perKilometerLimitCheck": {
+                          "type": "boolean",
+                          "description": "单公里运费限制是否生效"
+                        },
+                        "totalFeeLimit": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "运费总金额（包括异常费用）限制"
+                        },
+                        "totalFeeLimitCheck": {
+                          "type": "boolean",
+                          "description": "运费总金额（包括异常费用）限制是否生效"
+                        }
+                      },
+                      "title": "WaybillFeeRuleConfig",
+                      "$$ref": "#/definitions/运费审验"
+                    }
+                  },
+                  "title": "AuditAllRuleConfig",
+                  "$$ref": "#/definitions/审验规则配置"
+                },
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "id"
+                }
+              },
+              "title": "AuditRuleServiceUpdateRuleBody",
+              "$$ref": "#/definitions/修改审验规则"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/AuditRuleService/UpdateRuleResponseData"
+                }
+              },
+              "title": "/AuditRuleService/UpdateRuleResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRuleService/UpdateRuleStatus": {
+      "post": {
+        "tags": [
+          "AuditRuleService"
+        ],
+        "summary": "更新审验规则状态",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRuleServiceUpdateRuleStatusBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "ruleStatus"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "id"
+                },
+                "ruleStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "规则状态：1启用 2停用"
+                }
+              },
+              "title": "AuditRuleServiceUpdateRuleStatusBody",
+              "$$ref": "#/definitions/修改审验规则状态"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/AuditRuleService/UpdateRuleStatusResponseData"
+                }
+              },
+              "title": "/AuditRuleService/UpdateRuleStatusResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRuleService/QueryRule": {
+      "post": {
+        "tags": [
+          "AuditRuleService"
+        ],
+        "summary": "查询审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRuleServiceQueryRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "pageNum": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "title": "AuditRuleServiceQueryRuleBody",
+              "$$ref": "#/definitions/QueryRuleParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "auditAllRuleConfig": {
+                            "type": "object",
+                            "properties": {
+                              "commonRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "impactPayment": {
+                                    "type": "boolean",
+                                    "description": "未通过是否影响支付"
+                                  },
+                                  "ruleName": {
+                                    "type": "string",
+                                    "description": "规则名称"
+                                  }
+                                },
+                                "title": "CommonRuleConfig",
+                                "$$ref": "#/definitions/公共配置"
+                              },
+                              "driverRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "carModelCheck": {
+                                    "type": "boolean",
+                                    "description": "车型校验：驾驶证中不含AB的司机无法驾驶黄牌车"
+                                  },
+                                  "driverCertCheck": {
+                                    "type": "boolean",
+                                    "description": "司机信息认证(仅对网货运单有效)"
+                                  },
+                                  "driverContractCheck": {
+                                    "type": "boolean",
+                                    "description": "司机合同签署校验"
+                                  },
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "orderReasonableCheck": {
+                                    "type": "boolean",
+                                    "description": "接单合理性：租户内该司机在同一时间段不允许承运多个运单"
+                                  }
+                                },
+                                "title": "DriverRuleConfig",
+                                "$$ref": "#/definitions/司机校验"
+                              },
+                              "transportTimeLimitRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "departureTimeLimit": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "超过要求发车时间(单位：分钟)"
+                                  },
+                                  "departureTimeLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "超过要求发车时间(单位：分钟)是否生效"
+                                  },
+                                  "noCheckWhenNoneTransportTime": {
+                                    "type": "boolean",
+                                    "description": "未输入时效不校验"
+                                  },
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "timeLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "承运及时性是否生效"
+                                  },
+                                  "timeLimitEnd": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "description": "要求时效的xx倍结束"
+                                  },
+                                  "timeLimitStart": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "description": "要求时效的xx倍开始"
+                                  },
+                                  "useSystemCalcTransportTime": {
+                                    "type": "boolean",
+                                    "description": "使用系统智能计算时效"
+                                  }
+                                },
+                                "title": "TransportTimeLimitRuleConfig",
+                                "$$ref": "#/definitions/运输时效"
+                              },
+                              "transportTrackRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "punchInRadius": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "默认电子围栏半径（km）"
+                                  },
+                                  "punchInRadiusCheck": {
+                                    "type": "boolean",
+                                    "description": "默认电子围栏半径（km）是否生效"
+                                  },
+                                  "punchInRadiusRegions": {
+                                    "type": "array",
+                                    "description": "默认电子围栏半径（km）",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "cityCode": {
+                                          "type": "string",
+                                          "description": "市"
+                                        },
+                                        "cityName": {
+                                          "type": "string",
+                                          "description": "市"
+                                        },
+                                        "countCode": {
+                                          "type": "string",
+                                          "description": "区"
+                                        },
+                                        "countName": {
+                                          "type": "string",
+                                          "description": "区"
+                                        },
+                                        "provinceCode": {
+                                          "type": "string",
+                                          "description": "省"
+                                        },
+                                        "provinceName": {
+                                          "type": "string",
+                                          "description": "省"
+                                        },
+                                        "radius": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "电子围栏半径（km）"
+                                        }
+                                      },
+                                      "title": "PunchInRadiusRegionsItem",
+                                      "$$ref": "#/definitions/电子围栏高级设置"
+                                    }
+                                  },
+                                  "trackComplianceCheck": {
+                                    "type": "boolean",
+                                    "description": "轨迹合规性是否生效"
+                                  },
+                                  "trackComplianceContinuousTime": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                                  },
+                                  "trackComplianceSpeed": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                                  },
+                                  "trackCoverage": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "description": "轨迹覆盖率"
+                                  },
+                                  "trackCoverageCheck": {
+                                    "type": "boolean",
+                                    "description": "轨迹覆盖率是否生效"
+                                  }
+                                },
+                                "title": "TransportTrackRuleConfig",
+                                "$$ref": "#/definitions/运输轨迹"
+                              },
+                              "vehicleRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "orderReasonableCheck": {
+                                    "type": "boolean",
+                                    "description": "接单合理性：租户内该车辆在同一时间段不允许承运多个运单"
+                                  },
+                                  "sameCarCheck": {
+                                    "type": "boolean",
+                                    "description": "承运校验：限制使用与客户名称一致的车辆"
+                                  },
+                                  "vehicleTypeCheck": {
+                                    "type": "boolean",
+                                    "description": "车辆性质校验是否生效"
+                                  },
+                                  "vehicleTypes": {
+                                    "type": "array",
+                                    "description": "车辆性质",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "code": {
+                                          "type": "string",
+                                          "description": "车辆性质code"
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "车辆性质名称，如货运"
+                                        }
+                                      },
+                                      "title": "VehicleTypesItem",
+                                      "$$ref": "#/definitions/车辆类型"
+                                    }
+                                  },
+                                  "vehicleVertCheck": {
+                                    "type": "boolean",
+                                    "description": "车辆信息认证(仅对网货运单有效)"
+                                  }
+                                },
+                                "title": "VehicleRuleConfig",
+                                "$$ref": "#/definitions/车辆校验"
+                              },
+                              "waybillFeeRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "perKilometerLimit": {
+                                    "type": "array",
+                                    "description": "单公里运费限制",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "end": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "截止公里数"
+                                        },
+                                        "freightPerKilometer": {
+                                          "type": "integer",
+                                          "format": "int64",
+                                          "description": "每公里运费（分）"
+                                        },
+                                        "start": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "起始公里数"
+                                        }
+                                      },
+                                      "title": "PerKilometerLimitItem",
+                                      "$$ref": "#/definitions/每公里运费限制"
+                                    }
+                                  },
+                                  "perKilometerLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "单公里运费限制是否生效"
+                                  },
+                                  "totalFeeLimit": {
+                                    "type": "integer",
+                                    "format": "int64",
+                                    "description": "运费总金额（包括异常费用）限制"
+                                  },
+                                  "totalFeeLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "运费总金额（包括异常费用）限制是否生效"
+                                  }
+                                },
+                                "title": "WaybillFeeRuleConfig",
+                                "$$ref": "#/definitions/运费审验"
+                              }
+                            },
+                            "title": "AuditAllRuleConfig",
+                            "$$ref": "#/definitions/审验规则配置"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "id"
+                          },
+                          "ruleDesc": {
+                            "type": "string",
+                            "description": "规则概述"
+                          },
+                          "ruleName": {
+                            "type": "string",
+                            "description": "规则名称"
+                          },
+                          "statusCode": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "规则状态code"
+                          },
+                          "statusName": {
+                            "type": "string",
+                            "description": "规则状态名称"
+                          },
+                          "typeCode": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "规则类型code"
+                          },
+                          "typeName": {
+                            "type": "string",
+                            "description": "规则类型名称"
+                          }
+                        },
+                        "title": "/AuditRuleService/QueryRuleResponseDataListItem",
+                        "$$ref": "#/definitions/AuditRuleDTO"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "/AuditRuleService/QueryRuleResponseData",
+                  "$$ref": "#/definitions/PageData«AuditRuleDTO»"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/AuditRuleService/QueryRuleResponse",
+              "$$ref": "#/definitions/Response«PageData«AuditRuleDTO»»"
+            }
+          }
+        }
+      }
+    },
+    "/RuleLogService/QueryRuleLog": {
+      "post": {
+        "tags": [
+          "RuleLogService"
+        ],
+        "summary": "查询审验规则日志",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "RuleLogServiceQueryRuleLogBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "ruleId"
+              ],
+              "properties": {
+                "pageNum": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "ruleId": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "规则id"
+                }
+              },
+              "title": "RuleLogServiceQueryRuleLogBody",
+              "$$ref": "#/definitions/QueryRuleLogParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "content": {
+                            "type": "string",
+                            "description": "修改内容"
+                          },
+                          "operatorDate": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "操作时间"
+                          },
+                          "operatorId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "操作人id"
+                          },
+                          "operatorName": {
+                            "type": "string",
+                            "description": "操作人名称"
+                          }
+                        },
+                        "title": "/RuleLogService/QueryRuleLogResponseDataListItem",
+                        "$$ref": "#/definitions/AuditRuleLogDTO"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "/RuleLogService/QueryRuleLogResponseData",
+                  "$$ref": "#/definitions/PageData«AuditRuleLogDTO»"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/RuleLogService/QueryRuleLogResponse",
+              "$$ref": "#/definitions/Response«PageData«AuditRuleLogDTO»»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRecordService/Audit": {
+      "post": {
+        "tags": [
+          "AuditRecordService"
+        ],
+        "summary": "审核",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRecordServiceAuditBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appealPictureList": {
+                  "type": "array",
+                  "description": "申诉图片",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "appealReason": {
+                  "type": "string",
+                  "description": "审核理由"
+                },
+                "auditStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "是否审核通过 1：通过 2：不通过"
+                },
+                "id": {
+                  "type": "string"
+                }
+              },
+              "title": "AuditRecordServiceAuditBody",
+              "$$ref": "#/definitions/AuditCommand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "title": "/AuditRecordService/AuditResponseData"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/AuditRecordService/AuditResponse",
+              "$$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRecordService/QueryAuditRecordPage": {
+      "post": {
+        "tags": [
+          "AuditRecordService"
+        ],
+        "summary": "审验列表查询",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRecordServiceQueryAuditRecordPageBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "auditStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "审核状态：1通过 2不通过 3审核中"
+                },
+                "auditType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "规则类型：1网货 2自定义"
+                },
+                "pageNum": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "waybillNo": {
+                  "type": "string",
+                  "description": "运单号"
+                }
+              },
+              "title": "AuditRecordServiceQueryAuditRecordPageBody",
+              "$$ref": "#/definitions/审验列表请求参数"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "auditLogDTOList": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "appealPictureList": {
+                                  "type": "array",
+                                  "items": {
+                                    "type": "string"
+                                  }
+                                },
+                                "appealReason": {
+                                  "type": "string"
+                                },
+                                "operateType": {
+                                  "type": "integer",
+                                  "format": "int32"
+                                },
+                                "time": {
+                                  "type": "string",
+                                  "format": "date-time"
+                                }
+                              },
+                              "title": "AuditLogDTOListItem",
+                              "$$ref": "#/definitions/AuditLogDTO"
+                            }
+                          },
+                          "auditRuleName": {
+                            "type": "string",
+                            "description": "租户id"
+                          },
+                          "auditStatus": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "审核状态"
+                          },
+                          "carAbnormalReasons": {
+                            "type": "string",
+                            "description": "车辆异常原因"
+                          },
+                          "carId": {
+                            "type": "string",
+                            "description": "车辆ID"
+                          },
+                          "carNum": {
+                            "type": "string",
+                            "description": "车牌号"
+                          },
+                          "customerTenantId": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "租户id"
+                          },
+                          "driverAbnormalReasons": {
+                            "type": "string",
+                            "description": "司机异常原因"
+                          },
+                          "driverId": {
+                            "type": "string",
+                            "description": "司机ID"
+                          },
+                          "driverName": {
+                            "type": "string",
+                            "description": "司机名称"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "主键"
+                          },
+                          "noPassReasons": {
+                            "type": "string",
+                            "description": "不通过原因"
+                          },
+                          "projectId": {
+                            "type": "string",
+                            "description": "项目id"
+                          },
+                          "projectName": {
+                            "type": "string",
+                            "description": "项目名称"
+                          },
+                          "realLeftTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "实际发车时间"
+                          },
+                          "realUnloadTime": {
+                            "type": "string",
+                            "format": "date-time",
+                            "description": "实际卸车时间"
+                          },
+                          "tenantId": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "租户id"
+                          },
+                          "waybillAbnormalAmount": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "异常费用(分)"
+                          },
+                          "waybillId": {
+                            "type": "string",
+                            "description": "运单id"
+                          },
+                          "waybillNo": {
+                            "type": "string",
+                            "description": "运单号"
+                          },
+                          "waybillTotalAmount": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "总费用(分)"
+                          }
+                        },
+                        "title": "/AuditRecordService/QueryAuditRecordPageResponseDataListItem",
+                        "$$ref": "#/definitions/AuditRecordDTO"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "/AuditRecordService/QueryAuditRecordPageResponseData",
+                  "$$ref": "#/definitions/PageData«AuditRecordDTO»"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/AuditRecordService/QueryAuditRecordPageResponse",
+              "$$ref": "#/definitions/Response«PageData«AuditRecordDTO»»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRecordService/Appeal": {
+      "post": {
+        "tags": [
+          "AuditRecordService"
+        ],
+        "summary": "申诉",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRecordServiceAppealBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "appealPictureList": {
+                  "type": "array",
+                  "description": "申诉图片",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "appealReason": {
+                  "type": "string",
+                  "description": "申诉理由"
+                },
+                "id": {
+                  "type": "string"
+                }
+              },
+              "title": "AuditRecordServiceAppealBody",
+              "$$ref": "#/definitions/AppealCommand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "title": "/AuditRecordService/AppealResponseData"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/AuditRecordService/AppealResponse",
+              "$$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRecordService/ReInspect": {
+      "post": {
+        "tags": [
+          "AuditRecordService"
+        ],
+        "summary": "重新审验",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRecordServiceReInspectBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "waybillId": {
+                  "type": "string",
+                  "description": "运单id"
+                }
+              },
+              "title": "AuditRecordServiceReInspectBody",
+              "$$ref": "#/definitions/ReInspectCommand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "title": "/AuditRecordService/ReInspectResponseData"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/AuditRecordService/ReInspectResponse",
+              "$$ref": "#/definitions/Response"
+            }
+          }
+        }
+      }
+    },
+    "/SystemRuleService/AddRule": {
+      "post": {
+        "tags": [
+          "SystemRuleService"
+        ],
+        "summary": "新增审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SystemRuleServiceAddRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "auditAllRuleConfig",
+                "ruleType"
+              ],
+              "properties": {
+                "auditAllRuleConfig": {
+                  "type": "object",
+                  "properties": {
+                    "commonRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "impactPayment": {
+                          "type": "boolean",
+                          "description": "未通过是否影响支付"
+                        },
+                        "ruleName": {
+                          "type": "string",
+                          "description": "规则名称"
+                        }
+                      },
+                      "title": "CommonRuleConfig",
+                      "$$ref": "#/definitions/公共配置"
+                    },
+                    "driverRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "carModelCheck": {
+                          "type": "boolean",
+                          "description": "车型校验：驾驶证中不含AB的司机无法驾驶黄牌车"
+                        },
+                        "driverCertCheck": {
+                          "type": "boolean",
+                          "description": "司机信息认证(仅对网货运单有效)"
+                        },
+                        "driverContractCheck": {
+                          "type": "boolean",
+                          "description": "司机合同签署校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该司机在同一时间段不允许承运多个运单"
+                        }
+                      },
+                      "title": "DriverRuleConfig",
+                      "$$ref": "#/definitions/司机校验"
+                    },
+                    "transportTimeLimitRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "departureTimeLimit": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "超过要求发车时间(单位：分钟)"
+                        },
+                        "departureTimeLimitCheck": {
+                          "type": "boolean",
+                          "description": "超过要求发车时间(单位：分钟)是否生效"
+                        },
+                        "noCheckWhenNoneTransportTime": {
+                          "type": "boolean",
+                          "description": "未输入时效不校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "timeLimitCheck": {
+                          "type": "boolean",
+                          "description": "承运及时性是否生效"
+                        },
+                        "timeLimitEnd": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍结束"
+                        },
+                        "timeLimitStart": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍开始"
+                        },
+                        "useSystemCalcTransportTime": {
+                          "type": "boolean",
+                          "description": "使用系统智能计算时效"
+                        }
+                      },
+                      "title": "TransportTimeLimitRuleConfig",
+                      "$$ref": "#/definitions/运输时效"
+                    },
+                    "transportTrackRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "punchInRadius": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "默认电子围栏半径（km）"
+                        },
+                        "punchInRadiusCheck": {
+                          "type": "boolean",
+                          "description": "默认电子围栏半径（km）是否生效"
+                        },
+                        "punchInRadiusRegions": {
+                          "type": "array",
+                          "description": "默认电子围栏半径（km）",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "cityCode": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "cityName": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "countCode": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "countName": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "provinceCode": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "provinceName": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "radius": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "电子围栏半径（km）"
+                              }
+                            },
+                            "title": "PunchInRadiusRegionsItem",
+                            "$$ref": "#/definitions/电子围栏高级设置"
+                          }
+                        },
+                        "trackComplianceCheck": {
+                          "type": "boolean",
+                          "description": "轨迹合规性是否生效"
+                        },
+                        "trackComplianceContinuousTime": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackComplianceSpeed": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackCoverage": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "轨迹覆盖率"
+                        },
+                        "trackCoverageCheck": {
+                          "type": "boolean",
+                          "description": "轨迹覆盖率是否生效"
+                        }
+                      },
+                      "title": "TransportTrackRuleConfig",
+                      "$$ref": "#/definitions/运输轨迹"
+                    },
+                    "vehicleRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该车辆在同一时间段不允许承运多个运单"
+                        },
+                        "sameCarCheck": {
+                          "type": "boolean",
+                          "description": "承运校验：限制使用与客户名称一致的车辆"
+                        },
+                        "vehicleTypeCheck": {
+                          "type": "boolean",
+                          "description": "车辆性质校验是否生效"
+                        },
+                        "vehicleTypes": {
+                          "type": "array",
+                          "description": "车辆性质",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string",
+                                "description": "车辆性质code"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "车辆性质名称，如货运"
+                              }
+                            },
+                            "title": "VehicleTypesItem",
+                            "$$ref": "#/definitions/车辆类型"
+                          }
+                        },
+                        "vehicleVertCheck": {
+                          "type": "boolean",
+                          "description": "车辆信息认证(仅对网货运单有效)"
+                        }
+                      },
+                      "title": "VehicleRuleConfig",
+                      "$$ref": "#/definitions/车辆校验"
+                    },
+                    "waybillFeeRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "perKilometerLimit": {
+                          "type": "array",
+                          "description": "单公里运费限制",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "end": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "截止公里数"
+                              },
+                              "freightPerKilometer": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "每公里运费（分）"
+                              },
+                              "start": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "起始公里数"
+                              }
+                            },
+                            "title": "PerKilometerLimitItem",
+                            "$$ref": "#/definitions/每公里运费限制"
+                          }
+                        },
+                        "perKilometerLimitCheck": {
+                          "type": "boolean",
+                          "description": "单公里运费限制是否生效"
+                        },
+                        "totalFeeLimit": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "运费总金额（包括异常费用）限制"
+                        },
+                        "totalFeeLimitCheck": {
+                          "type": "boolean",
+                          "description": "运费总金额（包括异常费用）限制是否生效"
+                        }
+                      },
+                      "title": "WaybillFeeRuleConfig",
+                      "$$ref": "#/definitions/运费审验"
+                    }
+                  },
+                  "title": "AuditAllRuleConfig",
+                  "$$ref": "#/definitions/审验规则配置"
+                },
+                "ruleType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "规则类型：1供应链金融"
+                }
+              },
+              "title": "SystemRuleServiceAddRuleBody",
+              "$$ref": "#/definitions/AddSystemRuleCommand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/SystemRuleService/AddRuleResponseData"
+                }
+              },
+              "title": "/SystemRuleService/AddRuleResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/SystemRuleService/UpdateRule": {
+      "post": {
+        "tags": [
+          "SystemRuleService"
+        ],
+        "summary": "更新审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SystemRuleServiceUpdateRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "auditAllRuleConfig",
+                "id"
+              ],
+              "properties": {
+                "auditAllRuleConfig": {
+                  "type": "object",
+                  "properties": {
+                    "commonRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "impactPayment": {
+                          "type": "boolean",
+                          "description": "未通过是否影响支付"
+                        },
+                        "ruleName": {
+                          "type": "string",
+                          "description": "规则名称"
+                        }
+                      },
+                      "title": "CommonRuleConfig",
+                      "$$ref": "#/definitions/公共配置"
+                    },
+                    "driverRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "carModelCheck": {
+                          "type": "boolean",
+                          "description": "车型校验：驾驶证中不含AB的司机无法驾驶黄牌车"
+                        },
+                        "driverCertCheck": {
+                          "type": "boolean",
+                          "description": "司机信息认证(仅对网货运单有效)"
+                        },
+                        "driverContractCheck": {
+                          "type": "boolean",
+                          "description": "司机合同签署校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该司机在同一时间段不允许承运多个运单"
+                        }
+                      },
+                      "title": "DriverRuleConfig",
+                      "$$ref": "#/definitions/司机校验"
+                    },
+                    "transportTimeLimitRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "departureTimeLimit": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "超过要求发车时间(单位：分钟)"
+                        },
+                        "departureTimeLimitCheck": {
+                          "type": "boolean",
+                          "description": "超过要求发车时间(单位：分钟)是否生效"
+                        },
+                        "noCheckWhenNoneTransportTime": {
+                          "type": "boolean",
+                          "description": "未输入时效不校验"
+                        },
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "timeLimitCheck": {
+                          "type": "boolean",
+                          "description": "承运及时性是否生效"
+                        },
+                        "timeLimitEnd": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍结束"
+                        },
+                        "timeLimitStart": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "要求时效的xx倍开始"
+                        },
+                        "useSystemCalcTransportTime": {
+                          "type": "boolean",
+                          "description": "使用系统智能计算时效"
+                        }
+                      },
+                      "title": "TransportTimeLimitRuleConfig",
+                      "$$ref": "#/definitions/运输时效"
+                    },
+                    "transportTrackRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "punchInRadius": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "默认电子围栏半径（km）"
+                        },
+                        "punchInRadiusCheck": {
+                          "type": "boolean",
+                          "description": "默认电子围栏半径（km）是否生效"
+                        },
+                        "punchInRadiusRegions": {
+                          "type": "array",
+                          "description": "默认电子围栏半径（km）",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "cityCode": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "cityName": {
+                                "type": "string",
+                                "description": "市"
+                              },
+                              "countCode": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "countName": {
+                                "type": "string",
+                                "description": "区"
+                              },
+                              "provinceCode": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "provinceName": {
+                                "type": "string",
+                                "description": "省"
+                              },
+                              "radius": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "电子围栏半径（km）"
+                              }
+                            },
+                            "title": "PunchInRadiusRegionsItem",
+                            "$$ref": "#/definitions/电子围栏高级设置"
+                          }
+                        },
+                        "trackComplianceCheck": {
+                          "type": "boolean",
+                          "description": "轨迹合规性是否生效"
+                        },
+                        "trackComplianceContinuousTime": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackComplianceSpeed": {
+                          "type": "integer",
+                          "format": "int32",
+                          "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                        },
+                        "trackCoverage": {
+                          "type": "number",
+                          "format": "double",
+                          "description": "轨迹覆盖率"
+                        },
+                        "trackCoverageCheck": {
+                          "type": "boolean",
+                          "description": "轨迹覆盖率是否生效"
+                        }
+                      },
+                      "title": "TransportTrackRuleConfig",
+                      "$$ref": "#/definitions/运输轨迹"
+                    },
+                    "vehicleRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "orderReasonableCheck": {
+                          "type": "boolean",
+                          "description": "接单合理性：租户内该车辆在同一时间段不允许承运多个运单"
+                        },
+                        "sameCarCheck": {
+                          "type": "boolean",
+                          "description": "承运校验：限制使用与客户名称一致的车辆"
+                        },
+                        "vehicleTypeCheck": {
+                          "type": "boolean",
+                          "description": "车辆性质校验是否生效"
+                        },
+                        "vehicleTypes": {
+                          "type": "array",
+                          "description": "车辆性质",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "code": {
+                                "type": "string",
+                                "description": "车辆性质code"
+                              },
+                              "name": {
+                                "type": "string",
+                                "description": "车辆性质名称，如货运"
+                              }
+                            },
+                            "title": "VehicleTypesItem",
+                            "$$ref": "#/definitions/车辆类型"
+                          }
+                        },
+                        "vehicleVertCheck": {
+                          "type": "boolean",
+                          "description": "车辆信息认证(仅对网货运单有效)"
+                        }
+                      },
+                      "title": "VehicleRuleConfig",
+                      "$$ref": "#/definitions/车辆校验"
+                    },
+                    "waybillFeeRuleConfig": {
+                      "type": "object",
+                      "properties": {
+                        "open": {
+                          "type": "boolean",
+                          "description": "是否生效"
+                        },
+                        "perKilometerLimit": {
+                          "type": "array",
+                          "description": "单公里运费限制",
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "end": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "截止公里数"
+                              },
+                              "freightPerKilometer": {
+                                "type": "integer",
+                                "format": "int64",
+                                "description": "每公里运费（分）"
+                              },
+                              "start": {
+                                "type": "integer",
+                                "format": "int32",
+                                "description": "起始公里数"
+                              }
+                            },
+                            "title": "PerKilometerLimitItem",
+                            "$$ref": "#/definitions/每公里运费限制"
+                          }
+                        },
+                        "perKilometerLimitCheck": {
+                          "type": "boolean",
+                          "description": "单公里运费限制是否生效"
+                        },
+                        "totalFeeLimit": {
+                          "type": "integer",
+                          "format": "int64",
+                          "description": "运费总金额（包括异常费用）限制"
+                        },
+                        "totalFeeLimitCheck": {
+                          "type": "boolean",
+                          "description": "运费总金额（包括异常费用）限制是否生效"
+                        }
+                      },
+                      "title": "WaybillFeeRuleConfig",
+                      "$$ref": "#/definitions/运费审验"
+                    }
+                  },
+                  "title": "AuditAllRuleConfig",
+                  "$$ref": "#/definitions/审验规则配置"
+                },
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "id"
+                }
+              },
+              "title": "SystemRuleServiceUpdateRuleBody",
+              "$$ref": "#/definitions/修改审验规则"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/SystemRuleService/UpdateRuleResponseData"
+                }
+              },
+              "title": "/SystemRuleService/UpdateRuleResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/SystemRuleService/UpdateRuleStatus": {
+      "post": {
+        "tags": [
+          "SystemRuleService"
+        ],
+        "summary": "更新审验规则状态",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SystemRuleServiceUpdateRuleStatusBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "id",
+                "ruleStatus"
+              ],
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "format": "int64",
+                  "description": "id"
+                },
+                "ruleStatus": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "规则状态：1启用 2停用"
+                }
+              },
+              "title": "SystemRuleServiceUpdateRuleStatusBody",
+              "$$ref": "#/definitions/修改审验规则状态"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/SystemRuleService/UpdateRuleStatusResponseData"
+                }
+              },
+              "title": "/SystemRuleService/UpdateRuleStatusResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/SystemRuleService/QueryRule": {
+      "post": {
+        "tags": [
+          "SystemRuleService"
+        ],
+        "summary": "查询审验规则",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SystemRuleServiceQueryRuleBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "ruleType"
+              ],
+              "properties": {
+                "pageNum": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "pageSize": {
+                  "type": "integer",
+                  "format": "int32"
+                },
+                "ruleType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "规则类型：1供应链金融"
+                }
+              },
+              "title": "SystemRuleServiceQueryRuleBody",
+              "$$ref": "#/definitions/QuerySystemRuleParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "hasNextPage": {
+                      "type": "boolean"
+                    },
+                    "list": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "auditAllRuleConfig": {
+                            "type": "object",
+                            "properties": {
+                              "commonRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "impactPayment": {
+                                    "type": "boolean",
+                                    "description": "未通过是否影响支付"
+                                  },
+                                  "ruleName": {
+                                    "type": "string",
+                                    "description": "规则名称"
+                                  }
+                                },
+                                "title": "CommonRuleConfig",
+                                "$$ref": "#/definitions/公共配置"
+                              },
+                              "driverRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "carModelCheck": {
+                                    "type": "boolean",
+                                    "description": "车型校验：驾驶证中不含AB的司机无法驾驶黄牌车"
+                                  },
+                                  "driverCertCheck": {
+                                    "type": "boolean",
+                                    "description": "司机信息认证(仅对网货运单有效)"
+                                  },
+                                  "driverContractCheck": {
+                                    "type": "boolean",
+                                    "description": "司机合同签署校验"
+                                  },
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "orderReasonableCheck": {
+                                    "type": "boolean",
+                                    "description": "接单合理性：租户内该司机在同一时间段不允许承运多个运单"
+                                  }
+                                },
+                                "title": "DriverRuleConfig",
+                                "$$ref": "#/definitions/司机校验"
+                              },
+                              "transportTimeLimitRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "departureTimeLimit": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "超过要求发车时间(单位：分钟)"
+                                  },
+                                  "departureTimeLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "超过要求发车时间(单位：分钟)是否生效"
+                                  },
+                                  "noCheckWhenNoneTransportTime": {
+                                    "type": "boolean",
+                                    "description": "未输入时效不校验"
+                                  },
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "timeLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "承运及时性是否生效"
+                                  },
+                                  "timeLimitEnd": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "description": "要求时效的xx倍结束"
+                                  },
+                                  "timeLimitStart": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "description": "要求时效的xx倍开始"
+                                  },
+                                  "useSystemCalcTransportTime": {
+                                    "type": "boolean",
+                                    "description": "使用系统智能计算时效"
+                                  }
+                                },
+                                "title": "TransportTimeLimitRuleConfig",
+                                "$$ref": "#/definitions/运输时效"
+                              },
+                              "transportTrackRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "punchInRadius": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "默认电子围栏半径（km）"
+                                  },
+                                  "punchInRadiusCheck": {
+                                    "type": "boolean",
+                                    "description": "默认电子围栏半径（km）是否生效"
+                                  },
+                                  "punchInRadiusRegions": {
+                                    "type": "array",
+                                    "description": "默认电子围栏半径（km）",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "cityCode": {
+                                          "type": "string",
+                                          "description": "市"
+                                        },
+                                        "cityName": {
+                                          "type": "string",
+                                          "description": "市"
+                                        },
+                                        "countCode": {
+                                          "type": "string",
+                                          "description": "区"
+                                        },
+                                        "countName": {
+                                          "type": "string",
+                                          "description": "区"
+                                        },
+                                        "provinceCode": {
+                                          "type": "string",
+                                          "description": "省"
+                                        },
+                                        "provinceName": {
+                                          "type": "string",
+                                          "description": "省"
+                                        },
+                                        "radius": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "电子围栏半径（km）"
+                                        }
+                                      },
+                                      "title": "PunchInRadiusRegionsItem",
+                                      "$$ref": "#/definitions/电子围栏高级设置"
+                                    }
+                                  },
+                                  "trackComplianceCheck": {
+                                    "type": "boolean",
+                                    "description": "轨迹合规性是否生效"
+                                  },
+                                  "trackComplianceContinuousTime": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                                  },
+                                  "trackComplianceSpeed": {
+                                    "type": "integer",
+                                    "format": "int32",
+                                    "description": "电子围栏内有联系xx分钟小于yy km/h的轨迹"
+                                  },
+                                  "trackCoverage": {
+                                    "type": "number",
+                                    "format": "double",
+                                    "description": "轨迹覆盖率"
+                                  },
+                                  "trackCoverageCheck": {
+                                    "type": "boolean",
+                                    "description": "轨迹覆盖率是否生效"
+                                  }
+                                },
+                                "title": "TransportTrackRuleConfig",
+                                "$$ref": "#/definitions/运输轨迹"
+                              },
+                              "vehicleRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "orderReasonableCheck": {
+                                    "type": "boolean",
+                                    "description": "接单合理性：租户内该车辆在同一时间段不允许承运多个运单"
+                                  },
+                                  "sameCarCheck": {
+                                    "type": "boolean",
+                                    "description": "承运校验：限制使用与客户名称一致的车辆"
+                                  },
+                                  "vehicleTypeCheck": {
+                                    "type": "boolean",
+                                    "description": "车辆性质校验是否生效"
+                                  },
+                                  "vehicleTypes": {
+                                    "type": "array",
+                                    "description": "车辆性质",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "code": {
+                                          "type": "string",
+                                          "description": "车辆性质code"
+                                        },
+                                        "name": {
+                                          "type": "string",
+                                          "description": "车辆性质名称，如货运"
+                                        }
+                                      },
+                                      "title": "VehicleTypesItem",
+                                      "$$ref": "#/definitions/车辆类型"
+                                    }
+                                  },
+                                  "vehicleVertCheck": {
+                                    "type": "boolean",
+                                    "description": "车辆信息认证(仅对网货运单有效)"
+                                  }
+                                },
+                                "title": "VehicleRuleConfig",
+                                "$$ref": "#/definitions/车辆校验"
+                              },
+                              "waybillFeeRuleConfig": {
+                                "type": "object",
+                                "properties": {
+                                  "open": {
+                                    "type": "boolean",
+                                    "description": "是否生效"
+                                  },
+                                  "perKilometerLimit": {
+                                    "type": "array",
+                                    "description": "单公里运费限制",
+                                    "items": {
+                                      "type": "object",
+                                      "properties": {
+                                        "end": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "截止公里数"
+                                        },
+                                        "freightPerKilometer": {
+                                          "type": "integer",
+                                          "format": "int64",
+                                          "description": "每公里运费（分）"
+                                        },
+                                        "start": {
+                                          "type": "integer",
+                                          "format": "int32",
+                                          "description": "起始公里数"
+                                        }
+                                      },
+                                      "title": "PerKilometerLimitItem",
+                                      "$$ref": "#/definitions/每公里运费限制"
+                                    }
+                                  },
+                                  "perKilometerLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "单公里运费限制是否生效"
+                                  },
+                                  "totalFeeLimit": {
+                                    "type": "integer",
+                                    "format": "int64",
+                                    "description": "运费总金额（包括异常费用）限制"
+                                  },
+                                  "totalFeeLimitCheck": {
+                                    "type": "boolean",
+                                    "description": "运费总金额（包括异常费用）限制是否生效"
+                                  }
+                                },
+                                "title": "WaybillFeeRuleConfig",
+                                "$$ref": "#/definitions/运费审验"
+                              }
+                            },
+                            "title": "AuditAllRuleConfig",
+                            "$$ref": "#/definitions/审验规则配置"
+                          },
+                          "id": {
+                            "type": "string",
+                            "description": "id"
+                          },
+                          "ruleDesc": {
+                            "type": "string",
+                            "description": "规则概述"
+                          },
+                          "ruleName": {
+                            "type": "string",
+                            "description": "规则名称"
+                          },
+                          "statusCode": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "规则状态code"
+                          },
+                          "statusName": {
+                            "type": "string",
+                            "description": "规则状态名称"
+                          },
+                          "typeCode": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "规则类型code"
+                          },
+                          "typeName": {
+                            "type": "string",
+                            "description": "规则类型名称"
+                          }
+                        },
+                        "title": "/SystemRuleService/QueryRuleResponseDataListItem",
+                        "$$ref": "#/definitions/SystemRuleDTO"
+                      }
+                    },
+                    "total": {
+                      "type": "integer",
+                      "format": "int64"
+                    }
+                  },
+                  "title": "/SystemRuleService/QueryRuleResponseData",
+                  "$$ref": "#/definitions/PageData«SystemRuleDTO»"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/SystemRuleService/QueryRuleResponse",
+              "$$ref": "#/definitions/Response«PageData«SystemRuleDTO»»"
+            }
+          }
+        }
+      }
+    },
+    "/AuditRecordCheckService/QueryAuditRecord": {
+      "post": {
+        "tags": [
+          "AuditRecordCheckService"
+        ],
+        "summary": "查询审验记录",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "AuditRecordCheckServiceQueryAuditRecordBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "params": {
+                  "type": "array",
+                  "description": "查询参数",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "waybillCheckType": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "运单类型"
+                      },
+                      "waybillId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "运单id"
+                      }
+                    },
+                    "title": "ParamsItem",
+                    "$$ref": "#/definitions/WaybillRuleRecordCheckParam"
+                  }
+                }
+              },
+              "title": "AuditRecordCheckServiceQueryAuditRecordBody",
+              "$$ref": "#/definitions/RuleRecordCheckParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "abnormalReason": {
+                        "type": "string",
+                        "description": "异常原因"
+                      },
+                      "auditRecordCheckStatus": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "审验记录状态"
+                      },
+                      "impactPayment": {
+                        "type": "boolean",
+                        "description": "未通过是否影响支付"
+                      },
+                      "waybillId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "运单id"
+                      }
+                    },
+                    "title": "/AuditRecordCheckService/QueryAuditRecordResponseDataListItem",
+                    "$$ref": "#/definitions/AuditRecordCheckDTO"
+                  }
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/AuditRecordCheckService/QueryAuditRecordResponse",
+              "$$ref": "#/definitions/Response«List«AuditRecordCheckDTO»»"
+            }
+          }
+        }
+      }
+    },
+    "/SystemAuditRecordApi/ApplyAuditAsync": {
+      "post": {
+        "tags": [
+          "SystemAuditRecordApi"
+        ],
+        "summary": "异步发起运单审验",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SystemAuditRecordApiApplyAuditAsyncBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "waybillSystemRuleAuditCommandList"
+              ],
+              "properties": {
+                "waybillSystemRuleAuditCommandList": {
+                  "type": "array",
+                  "description": "运单系统规则审验数据",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "ruleId",
+                      "waybillIdList"
+                    ],
+                    "properties": {
+                      "ruleId": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "规则id"
+                      },
+                      "waybillIdList": {
+                        "type": "array",
+                        "description": "运单id",
+                        "items": {
+                          "type": "integer",
+                          "format": "int64"
+                        }
+                      }
+                    },
+                    "title": "WaybillSystemRuleAuditCommandListItem",
+                    "$$ref": "#/definitions/WaybillSystemRuleAuditCommand"
+                  }
+                }
+              },
+              "title": "SystemAuditRecordApiApplyAuditAsyncBody",
+              "$$ref": "#/definitions/SystemAuditAsyncCommand"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "result": {
+                      "type": "object"
+                    }
+                  },
+                  "title": "/SystemAuditRecordApi/ApplyAuditAsyncResponseData"
+                }
+              },
+              "title": "/SystemAuditRecordApi/ApplyAuditAsyncResponse",
+              "$$ref": "#/definitions/Response«Void»"
+            }
+          }
+        }
+      }
+    },
+    "/SystemAuditRecordApi/QueryAuditRecord": {
+      "post": {
+        "tags": [
+          "SystemAuditRecordApi"
+        ],
+        "summary": "查询审验记录",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "SystemAuditRecordApiQueryAuditRecordBody",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "required": [
+                "ruleType",
+                "waybillIdList"
+              ],
+              "properties": {
+                "ruleType": {
+                  "type": "integer",
+                  "format": "int32",
+                  "description": "规则类型，1供应链金融"
+                },
+                "waybillIdList": {
+                  "type": "array",
+                  "description": "运单id",
+                  "items": {
+                    "type": "integer",
+                    "format": "int64"
+                  }
+                }
+              },
+              "title": "SystemAuditRecordApiQueryAuditRecordBody",
+              "$$ref": "#/definitions/SystemAuditRecordParam"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "number"
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "auditRecords": {
+                      "type": "array",
+                      "description": "审验结果",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "abnormalReason": {
+                            "type": "string",
+                            "description": "异常原因"
+                          },
+                          "recordStatus": {
+                            "type": "integer",
+                            "format": "int32",
+                            "description": "审验状态"
+                          },
+                          "waybillId": {
+                            "type": "integer",
+                            "format": "int64",
+                            "description": "运单id"
+                          }
+                        },
+                        "title": "AuditRecordsItem",
+                        "$$ref": "#/definitions/WaybillSystemAuditRecordDTO"
+                      }
+                    }
+                  },
+                  "title": "/SystemAuditRecordApi/QueryAuditRecordResponseData",
+                  "$$ref": "#/definitions/SystemAuditRecordDTO"
+                },
+                "msg": {
+                  "type": "string"
+                },
+                "success": {
+                  "type": "boolean"
+                }
+              },
+              "title": "/SystemAuditRecordApi/QueryAuditRecordResponse",
+              "$$ref": "#/definitions/Response«SystemAuditRecordDTO»"
+            }
+          }
+        }
+      }
+    }
+  }
+}

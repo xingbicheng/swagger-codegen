@@ -1,0 +1,22 @@
+import { message } from 'antd';
+import type { ModelAction, ModelState, Commands, Result } from '@moka-fe/dva-types';
+import { waybillAudit } from '@/services/';
+
+const namespace = 'waybillModel';
+export const namespace_waybill = namespace;
+
+export type WaybillModelState = ModelState<WaybillModel>;
+export type WaybillModelAction = ModelAction<WaybillModel>;
+
+
+
+{{#apiInfo}}
+const apiModule = angular.module('api', [])
+{{#apis}}
+{{#operations}}
+.service('{{classname}}', api.{{classname}})
+{{/operations}}
+{{/apis}}
+
+export default apiModule;
+{{/apiInfo}}

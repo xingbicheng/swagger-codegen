@@ -1,0 +1,34 @@
+import * as api from './api/api';
+import * as angular from 'angular';
+
+import { message } from 'antd';
+import type { ModelAction, ModelState, Commands, Result } from '@moka-fe/dva-types';
+import { waybillAudit } from '@/services/';
+{{#apiInfo}}
+{{#apis}}
+const namespace = 'waybillModel';
+export const namespace_waybill = namespace;
+
+export type WaybillModelState = ModelState<WaybillModel>;
+export type WaybillModelAction = ModelAction<WaybillModel>;
+{{#operations}}
+interface WaybillModel {
+    namespace: typeof namespace;
+    state: {},
+    effects: {
+        {{#operation}}
+        {{nickname}}: (
+              { payload }: { payload: waybillAudit.models.{{nickname}}Body },
+              { call, put }: Commands<WaybillModel>,
+            ) => void;
+        {{/operation}}
+      },
+  reducers: {
+      save: (state: WaybillModelState, action: { payload: WaybillModelState }) => WaybillModelState;
+    };
+   }
+{{/operations}}
+{{/apis}}
+
+export default apiModule;
+{{/apiInfo}}

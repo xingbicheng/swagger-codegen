@@ -5,7 +5,8 @@ package io.swagger.codegen;
  */
 public class CodegenConstants {
     /* System Properties */
-    // NOTE: We may want to move these to a separate class to avoid confusion or modification.
+    // NOTE: We may want to move these to a separate class to avoid confusion or
+    // modification.
     public static final String APIS = "apis";
     public static final String MODELS = "models";
     public static final String SUPPORTING_FILES = "supportingFiles";
@@ -13,6 +14,8 @@ public class CodegenConstants {
     public static final String MODEL_DOCS = "modelDocs";
     public static final String API_TESTS = "apiTests";
     public static final String API_DOCS = "apiDocs";
+    public static final String DVA_MODEL_TESTS = "dvaModelTests";
+    public static final String DVA_MODEL_DOCS = "dvaModelDocs";
     public static final String WITH_XML = "withXml";
     /* /end System Properties */
 
@@ -21,6 +24,9 @@ public class CodegenConstants {
 
     public static final String MODEL_PACKAGE = "modelPackage";
     public static final String MODEL_PACKAGE_DESC = "package for generated models";
+
+    public static final String DVA_MODEL_PACKAGE = "dvaModelPackage";
+    public static final String DVA_MODEL_PACKAGE_DESC = "package for generated dvaModels";
 
     public static final String TEMPLATE_DIR = "templateDir";
 
@@ -157,8 +163,13 @@ public class CodegenConstants {
     public static final String DOTNET_FRAMEWORK = "targetFramework";
     public static final String DOTNET_FRAMEWORK_DESC = "The target .NET framework version.";
 
-    public static enum MODEL_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original}
-    public static enum ENUM_PROPERTY_NAMING_TYPE {camelCase, PascalCase, snake_case, original, UPPERCASE}
+    public static enum MODEL_PROPERTY_NAMING_TYPE {
+        camelCase, PascalCase, snake_case, original
+    }
+
+    public static enum ENUM_PROPERTY_NAMING_TYPE {
+        camelCase, PascalCase, snake_case, original, UPPERCASE
+    }
 
     public static final String ENUM_PROPERTY_NAMING = "enumPropertyNaming";
     public static final String ENUM_PROPERTY_NAMING_DESC = "Naming convention for enum properties: 'camelCase', 'PascalCase', 'snake_case', 'UPPERCASE', and 'original'";
@@ -208,8 +219,15 @@ public class CodegenConstants {
     public static final String GENERATE_MODELS = "generateModels";
     public static final String GENERATE_MODEL_DOCS = "generateModelDocs";
 
+    // Not user-configurable. System provided for use in templates.
+    public static final String GENERATE_DVA_MODELS = "generateDvaModels";
+    public static final String GENERATE_DVA_MODEL_DOCS = "generateDvaModelDocs";
+
     public static final String GENERATE_MODEL_TESTS = "generateModelTests";
     public static final String GENERATE_MODEL_TESTS_DESC = "Specifies that model tests are to be generated.";
+
+    public static final String GENERATE_DVA_MODEL_TESTS = "generateDvaModelTests";
+    public static final String GENERATE_DVA_MODEL_TESTS_DESC = "Specifies that model tests are to be generated.";
 
     public static final String HIDE_GENERATION_TIMESTAMP = "hideGenerationTimestamp";
     public static final String HIDE_GENERATION_TIMESTAMP_DESC = "Hides the generation timestamp when files are generated.";

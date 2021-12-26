@@ -21,29 +21,35 @@ public class TypeScriptAngularJsClientCodegen extends AbstractTypeScriptClientCo
     @Override
     public void processOpts() {
         super.processOpts();
-        supportingFiles.add(new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
-        supportingFiles.add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
+        supportingFiles.add(
+                new SupportingFile("models.mustache", modelPackage().replace('.', File.separatorChar), "models.ts"));
+        supportingFiles
+                .add(new SupportingFile("apis.mustache", apiPackage().replace('.', File.separatorChar), "api.ts"));
         supportingFiles.add(new SupportingFile("index.mustache", getIndexDirectory(), "index.ts"));
-        supportingFiles.add(new SupportingFile("api.module.mustache", getIndexDirectory(), "api.module.ts"));
+        supportingFiles.add(new SupportingFile("dva.model.mustache", getIndexDirectory(), "dva.model.ts"));
         supportingFiles.add(new SupportingFile("git_push.sh.mustache", "", "git_push.sh"));
         supportingFiles.add(new SupportingFile("gitignore", "", ".gitignore"));
-
+        supportingFiles
+                .add(new SupportingFile("dva.models.mustache", dvaModelPackage().replace('.', File.separatorChar),
+                        "dva.models.ts"));
     }
-    
+
     public TypeScriptAngularJsClientCodegen() {
         super();
         outputFolder = "generated-code/typescript-angularjs";
         modelTemplateFiles.put("model.mustache", ".ts");
         apiTemplateFiles.put("api.mustache", ".ts");
+        dvaModelTemplateFiles.put("dva.model.mustache", ".ts");
         embeddedTemplateDir = templateDir = "typescript-angularjs";
         apiPackage = "api";
         modelPackage = "model";
+        dvaModelPackage = "dvaModel";
     }
 
     @Override
     public String getSwaggerType(Property p) {
         String swaggerType = super.getSwaggerType(p);
-        if(isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
+        if (isLanguagePrimitive(swaggerType) || isLanguageGenericType(swaggerType)) {
             return swaggerType;
         }
         return addModelPrefix(swaggerType);
@@ -79,8 +85,8 @@ public class TypeScriptAngularJsClientCodegen extends AbstractTypeScriptClientCo
     }
 
     private boolean isLanguageGenericType(String type) {
-        for (String genericType: languageGenericTypes) {
-            if (type.startsWith(genericType + "<"))  {
+        for (String genericType : languageGenericTypes) {
+            if (type.startsWith(genericType + "<")) {
                 return true;
             }
         }

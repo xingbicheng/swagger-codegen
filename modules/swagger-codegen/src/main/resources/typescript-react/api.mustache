@@ -14,7 +14,7 @@ import type * as models from '../model/models';
  */
 {{/description}}
   const basePath = '{{{contextPath}}}'.replace(/\/$/, '');
-
+  
 
 {{#operation}}
   /**
@@ -31,10 +31,9 @@ import type * as models from '../model/models';
    */
    export const {{nickname}} =
     async (
-      param: Params{{nickname}},
+      param: Params{{#titlecase}}{{nickname}}{{/titlecase}},
     ) => {
-
-      const path = '12345';
+      const path = '';
       const url = basePath + path;
       return request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
         {
@@ -45,5 +44,3 @@ import type * as models from '../model/models';
     };
 {{/operation}}
 {{/operations}}
-
-export const {{nickname}} = '{{nickname}}Model'

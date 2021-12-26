@@ -169,6 +169,8 @@ samples/client/petstore/typescript-node/npm/npm-debug.log
 samples/client/petstore/typescript-aurelia/**/dist/
 samples/client/petstore/typescript-angular/tsd-debug.log
 
+/output
+
 # aspnetcore
 samples/server/petstore/aspnetcore/.vs/
 effective.pom
