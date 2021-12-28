@@ -443,7 +443,7 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     LOGGER.info("Model " + name + " not imported due to import mapping");
                     continue;
                 }
-                ResponseModel model = definitions.get(name);
+                Model model = definitions.get(name);
                 // if (name.indexOf("ResponseData") >= 0) {
                 // model.put("isResponseData", true);
                 // }
