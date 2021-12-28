@@ -1,22 +1,101 @@
+// create by generate-service/plugins/typescript-react/dva.model.mustache
 import { message } from 'antd';
 import type { ModelAction, ModelState, Commands, Result } from '@moka-fe/dva-types';
-import { waybillAudit } from '@/services/';
+import { {{baseNameLowerFirstCase}} } from '@/services/';
 
-const namespace = 'waybillModel';
-export const namespace_waybill = namespace;
+const namespace = '{{dvaModelNameLowerFirstCase}}';
+export const namespace_{{baseNameSnakeCase}} = namespace;
 
-export type WaybillModelState = ModelState<WaybillModel>;
-export type WaybillModelAction = ModelAction<WaybillModel>;
+export type {{dvaModelName}}State = ModelState<{{dvaModelName}}>;
+export type {{dvaModelName}}Action = ModelAction<{{dvaModelName}}>;
 
+export type {{dvaModelName}}SaveState = Partial<{{dvaModelName}}State>;
 
+interface {{dvaModelName}} {
+  namespace: typeof namespace;
+  state: {
+    pageSize: number;
+    pageNum: number;
+    totalNum: number;
+  };
+  effects: {
+    {{#operations}}
+    {{#operation}}
+    /**
+    {{#summary}}
+    * @summary {{&summary}}
+    {{/summary}}
+    {{#description}}
+    * @description {{&description}}
+    {{/description}}
+    */
+    {{operationNameLowerFirstCase}}: (
+      {
+        payload,
+        callback,
+      }: { payload: {{baseNameLowerFirstCase}}.models.{{operationName}}Body; callback: () => void },
+      { call, put }: Commands<{{dvaModelName}}>,
+    ) => void;
+    {{/operation}}
+    {{/operations}}
+  };
+  reducers: {
+    save: (
+      state: {{dvaModelName}}State,
+      action: { payload: {{dvaModelName}}SaveState },
+    ) => {{dvaModelName}}State;
+  };
+}
 
-{{#apiInfo}}
-const apiModule = angular.module('api', [])
-{{#apis}}
-{{#operations}}
-.service('{{classname}}', api.{{classname}})
-{{/operations}}
-{{/apis}}
+const {{dvaModelNameLowerFirstCase}}: {{dvaModelName}} = {
+  namespace,
+  state: {
+    pageSize: 15,
+    pageNum: 1,
+    totalNum: 0,
+  },
+  effects: {
+    {{#operations}}
+    {{#operation}}
+    /**
+    {{#summary}}
+    * @summary {{&summary}}
+    {{/summary}}
+    {{#description}}
+    * @description {{&description}}
+    {{/description}}
+    */
+    *{{operationNameLowerFirstCase}}({ payload = {} }, { call, put, select }) {
+      const {
+        data,
+        success,
+        msg,
+      }: Result<typeof {{baseNameLowerFirstCase}}.api.{{operationNameLowerFirstCase}}> = yield call(
+        {{baseNameLowerFirstCase}}.api.{{operationNameLowerFirstCase}},
+        {
+          ...payload,
+        },
+      );
+      if (success) {
+        
+      } else {
+        message.error(msg);
+      }
+    },
+    {{/operation}}
+    {{/operations}}
+  },
+  reducers: {
+    /**
+     * common 存储
+     */
+    save(state, action) {
+      return {
+        ...state,
+        ...action.payload,
+      };
+    },
+  },
+};
 
-export default apiModule;
-{{/apiInfo}}
+export default {{dvaModelNameLowerFirstCase}};

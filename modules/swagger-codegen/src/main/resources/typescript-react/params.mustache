@@ -4,10 +4,10 @@
 {{^hasOnlyBodyParams}}
 {{#headerParams.0}}
 /**{{#headerParams}}
-  * @description {{nickname}} headers 参数
+  * @description {{#titlecase}}{{operationName}}{{/titlecase}} headers 参数
   * @property `{{^required}}[{{/required}}{{baseName}}{{^required}}]{{/required}}` {{&description}}
   {{/headerParams}}*/
-export interface ParamsHeader{{nickname}} {
+export interface ParamsHeader{{#titlecase}}{{operationName}}{{/titlecase}} {
   {{#headerParams}}
   {{#description}}
   /** {{&description}} */
@@ -18,7 +18,7 @@ export interface ParamsHeader{{nickname}} {
 {{/headerParams.0}}
 /**
   {{#description}}
-  * @description {{nickname}}参数
+  * @description {{#titlecase}}{{operationName}}{{/titlecase}}参数
   {{/description}}
 {{#pathParams.0}}
   {{#pathParams}}
@@ -36,41 +36,6 @@ export interface ParamsHeader{{nickname}} {
   {{/formParams}}
 {{/formParams.0}}
   */
-export interface Params{{nickname}} {
-{{#pathParams.0}}
-  // pathParams
-  {{#pathParams}}
-  {{#description}}
-  /**
-   * {{&description}}
-   */
-  {{/description}}
-  {{paramName}}{{^required}}?{{/required}}: {{&dataType}};
-  {{/pathParams}}
-{{/pathParams.0}}
-{{#queryParams.0}}
-  // queryParams
-  {{#queryParams}}
-  {{#description}}
-  /**
-   * {{&description}}
-   */
-  {{/description}}
-  {{paramName}}{{^required}}?{{/required}}: {{{dataType}}};
-  {{/queryParams}}
-{{/queryParams.0}}
-{{#formParams.0}}
-  // formParams
-  {{#formParams}}
-  {{#description}}
-  /**
-   * {{&description}}
-   */
-  {{/description}}
-  {{paramName}}{{^required}}?{{/required}}: {{&dataType}};
-  {{/formParams}}
-{{/formParams.0}}
-}
 {{/hasOnlyBodyParams}}
 {{#bodyParam}}
 /**
@@ -78,7 +43,7 @@ export interface Params{{nickname}} {
   * {{&description}}
   {{/description}}
   */
-export type Params{{nickname}} = {{&dataType}};
+export type ParamsBody{{#titlecase}}{{operationName}}{{/titlecase}} = {{&dataType}};
 {{/bodyParam}}
 {{/allParams.0}}
 {{/operation}}

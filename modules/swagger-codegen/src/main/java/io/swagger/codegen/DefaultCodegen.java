@@ -850,6 +850,22 @@ public class DefaultCodegen {
     }
 
     /**
+     * Return the operation Name (method name)
+     *
+     * @param operationId operation Name
+     * @return the sanitized method name
+     */
+    @SuppressWarnings("static-method")
+    public String toOperationName(String operationName) {
+        // throw exception if method name is empty
+        if (StringUtils.isEmpty(operationName)) {
+            throw new RuntimeException("Empty method name (operationName) not allowed");
+        }
+
+        return operationName;
+    }
+
+    /**
      * Return the variable name by removing invalid characters and proper escaping
      * if
      * it's a reserved word.
@@ -1366,6 +1382,14 @@ public class DefaultCodegen {
     @SuppressWarnings("static-method")
     public static String titleCase(final String input) {
         return input.substring(0, 1).toUpperCase() + input.substring(1);
+    }
+
+    /**
+     * Capitalise first character of string
+     */
+    @SuppressWarnings("static-method")
+    public static String lowerFirstCase(final String input) {
+        return input.substring(0, 1).toLowerCase() + input.substring(1);
     }
 
     /**
@@ -2332,6 +2356,7 @@ public class DefaultCodegen {
         op.operationIdOriginal = operation.getOperationId();
 
         String operationId = getOrGenerateOperationId(operation, path, httpMethod);
+        String operationName = DefaultCodegen.titleCase(generateOperationName(operation, path, httpMethod));
         // remove prefix in operationId
         if (removeOperationIdPrefix) {
             int offset = operationId.indexOf('_');
@@ -2342,6 +2367,11 @@ public class DefaultCodegen {
         operationId = removeNonNameElementToCamelCase(operationId);
         op.path = path;
         op.operationId = toOperationId(operationId);
+        op.operationName = toOperationName(operationName);
+        op.operationNameLowerCase = operationName.toLowerCase();
+        op.operationNameCamelCase = DefaultCodegen.camelize(operationName);
+        op.operationNameSnakeCase = DefaultCodegen.underscore(operationName);
+        op.operationNameLowerFirstCase = DefaultCodegen.camelize(operationName, true);
         op.summary = escapeText(operation.getSummary());
         op.unescapedNotes = operation.getDescription();
         op.notes = escapeText(operation.getDescription());
@@ -3244,6 +3274,46 @@ public class DefaultCodegen {
     }
 
     /**
+     * Get operationId from the operation object, and if it's blank, generate a new
+     * one from the given parameters.
+     *
+     * @param operation  the operation object
+     * @param path       the path of the operation
+     * @param httpMethod the HTTP method of the operation
+     * @return the (generated) operationName
+     */
+    protected String generateOperationName(Operation operation, String path, String httpMethod) {
+        String tmpPath = path;
+        tmpPath = tmpPath.replaceAll("\\{", "");
+        tmpPath = tmpPath.replaceAll("\\}", "");
+        // 根据处理后的 swagger-api 可知 tmpPath 仅有两种形式
+        // 1. /serviceName/operationName
+        // 2. /operationName
+        String[] operationParts = tmpPath.split("/");
+        String newTmpPath = operationParts.length > 0 ? '/' + operationParts[operationParts.length - 1] : tmpPath;
+        String[] parts = (newTmpPath + "/" + httpMethod).split("/");
+        StringBuilder builder = new StringBuilder();
+        if ("/".equals(tmpPath)) {
+            // must be root tmpPath
+            builder.append("root");
+        }
+        for (String part : parts) {
+            if (part.length() > 0) {
+                if (builder.toString().length() == 0) {
+                    part = Character.toLowerCase(part.charAt(0)) + part.substring(1);
+                } else {
+                    part = initialCaps(part);
+                }
+                builder.append(part);
+            }
+        }
+        String operationName = sanitizeName(builder.toString());
+        LOGGER.warn("Empty operationId found for path: " + httpMethod + " " + path
+                + ". Renamed to auto-generated operationId: " + operationName);
+        return operationName;
+    }
+
+    /**
      * Check the type to see if it needs import the library/module/package
      *
      * @param type name of the type
@@ -3343,6 +3413,10 @@ public class DefaultCodegen {
         co.operationIdSnakeCase = DefaultCodegen.underscore(uniqueName);
         opList.add(co);
         co.baseName = tag;
+        co.baseNameLowerCase = tag.toLowerCase();
+        co.baseNameCamelCase = DefaultCodegen.camelize(tag);
+        co.baseNameSnakeCase = DefaultCodegen.underscore(tag);
+        co.baseNameLowerFirstCase = DefaultCodegen.camelize(tag, true);
     }
 
     private void addParentContainer(CodegenModel m, String name, Property property) {

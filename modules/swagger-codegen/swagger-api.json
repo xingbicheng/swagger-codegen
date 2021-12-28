@@ -55,7 +55,7 @@
         ],
         "parameters": [
           {
-            "name": "DriverClockApiAuditDriverClockBody",
+            "name": "/DriverClockApi/AuditDriverClockBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -89,7 +89,7 @@
                   "description": "运单id"
                 }
               },
-              "title": "DriverClockApiAuditDriverClockBody",
+              "title": "/DriverClockApi/AuditDriverClockBody",
               "$$ref": "#/definitions/司机网货站点打卡请求参数"
             }
           }
@@ -139,7 +139,7 @@
         ],
         "parameters": [
           {
-            "name": "DictionaryServiceGetCustomAuditRuleBody",
+            "name": "/DictionaryService/GetCustomAuditRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -153,7 +153,7 @@
                   "format": "int32"
                 }
               },
-              "title": "DictionaryServiceGetCustomAuditRuleBody",
+              "title": "/DictionaryService/GetCustomAuditRuleBody",
               "$$ref": "#/definitions/AuditRuleDictParam"
             }
           }
@@ -224,7 +224,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRuleServiceAddRuleBody",
+            "name": "/AuditRuleService/AddRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -503,7 +503,7 @@
                   "$$ref": "#/definitions/审验规则配置"
                 }
               },
-              "title": "AuditRuleServiceAddRuleBody",
+              "title": "/AuditRuleService/AddRuleBody",
               "$$ref": "#/definitions/新增审验规则"
             }
           }
@@ -551,7 +551,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRuleServiceUpdateRuleBody",
+            "name": "/AuditRuleService/UpdateRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -836,7 +836,7 @@
                   "description": "id"
                 }
               },
-              "title": "AuditRuleServiceUpdateRuleBody",
+              "title": "/AuditRuleService/UpdateRuleBody",
               "$$ref": "#/definitions/修改审验规则"
             }
           }
@@ -884,7 +884,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRuleServiceUpdateRuleStatusBody",
+            "name": "/AuditRuleService/UpdateRuleStatusBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -904,7 +904,7 @@
                   "description": "规则状态：1启用 2停用"
                 }
               },
-              "title": "AuditRuleServiceUpdateRuleStatusBody",
+              "title": "/AuditRuleService/UpdateRuleStatusBody",
               "$$ref": "#/definitions/修改审验规则状态"
             }
           }
@@ -952,7 +952,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRuleServiceQueryRuleBody",
+            "name": "/AuditRuleService/QueryRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -966,7 +966,7 @@
                   "format": "int32"
                 }
               },
-              "title": "AuditRuleServiceQueryRuleBody",
+              "title": "/AuditRuleService/QueryRuleBody",
               "$$ref": "#/definitions/QueryRuleParam"
             }
           }
@@ -1329,7 +1329,7 @@
         ],
         "parameters": [
           {
-            "name": "RuleLogServiceQueryRuleLogBody",
+            "name": "/RuleLogService/QueryRuleLogBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1351,7 +1351,7 @@
                   "description": "规则id"
                 }
               },
-              "title": "RuleLogServiceQueryRuleLogBody",
+              "title": "/RuleLogService/QueryRuleLogBody",
               "$$ref": "#/definitions/QueryRuleLogParam"
             }
           }
@@ -1432,7 +1432,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRecordServiceAuditBody",
+            "name": "/AuditRecordService/AuditBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1457,7 +1457,7 @@
                   "type": "string"
                 }
               },
-              "title": "AuditRecordServiceAuditBody",
+              "title": "/AuditRecordService/AuditBody",
               "$$ref": "#/definitions/AuditCommand"
             }
           }
@@ -1500,7 +1500,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRecordServiceQueryAuditRecordPageBody",
+            "name": "/AuditRecordService/QueryAuditRecordPageBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1528,7 +1528,7 @@
                   "description": "运单号"
                 }
               },
-              "title": "AuditRecordServiceQueryAuditRecordPageBody",
+              "title": "/AuditRecordService/QueryAuditRecordPageBody",
               "$$ref": "#/definitions/审验列表请求参数"
             }
           }
@@ -1705,7 +1705,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRecordServiceAppealBody",
+            "name": "/AuditRecordService/AppealBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1725,7 +1725,7 @@
                   "type": "string"
                 }
               },
-              "title": "AuditRecordServiceAppealBody",
+              "title": "/AuditRecordService/AppealBody",
               "$$ref": "#/definitions/AppealCommand"
             }
           }
@@ -1768,7 +1768,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRecordServiceReInspectBody",
+            "name": "/AuditRecordService/ReInspectBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -1778,7 +1778,7 @@
                   "description": "运单id"
                 }
               },
-              "title": "AuditRecordServiceReInspectBody",
+              "title": "/AuditRecordService/ReInspectBody",
               "$$ref": "#/definitions/ReInspectCommand"
             }
           }
@@ -1821,7 +1821,7 @@
         ],
         "parameters": [
           {
-            "name": "SystemRuleServiceAddRuleBody",
+            "name": "/SystemRuleService/AddRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2106,7 +2106,7 @@
                   "description": "规则类型：1供应链金融"
                 }
               },
-              "title": "SystemRuleServiceAddRuleBody",
+              "title": "/SystemRuleService/AddRuleBody",
               "$$ref": "#/definitions/AddSystemRuleCommand"
             }
           }
@@ -2154,7 +2154,7 @@
         ],
         "parameters": [
           {
-            "name": "SystemRuleServiceUpdateRuleBody",
+            "name": "/SystemRuleService/UpdateRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2439,7 +2439,7 @@
                   "description": "id"
                 }
               },
-              "title": "SystemRuleServiceUpdateRuleBody",
+              "title": "/SystemRuleService/UpdateRuleBody",
               "$$ref": "#/definitions/修改审验规则"
             }
           }
@@ -2487,7 +2487,7 @@
         ],
         "parameters": [
           {
-            "name": "SystemRuleServiceUpdateRuleStatusBody",
+            "name": "/SystemRuleService/UpdateRuleStatusBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2507,7 +2507,7 @@
                   "description": "规则状态：1启用 2停用"
                 }
               },
-              "title": "SystemRuleServiceUpdateRuleStatusBody",
+              "title": "/SystemRuleService/UpdateRuleStatusBody",
               "$$ref": "#/definitions/修改审验规则状态"
             }
           }
@@ -2555,7 +2555,7 @@
         ],
         "parameters": [
           {
-            "name": "SystemRuleServiceQueryRuleBody",
+            "name": "/SystemRuleService/QueryRuleBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2577,7 +2577,7 @@
                   "description": "规则类型：1供应链金融"
                 }
               },
-              "title": "SystemRuleServiceQueryRuleBody",
+              "title": "/SystemRuleService/QueryRuleBody",
               "$$ref": "#/definitions/QuerySystemRuleParam"
             }
           }
@@ -2940,7 +2940,7 @@
         ],
         "parameters": [
           {
-            "name": "AuditRecordCheckServiceQueryAuditRecordBody",
+            "name": "/AuditRecordCheckService/QueryAuditRecordBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -2967,7 +2967,7 @@
                   }
                 }
               },
-              "title": "AuditRecordCheckServiceQueryAuditRecordBody",
+              "title": "/AuditRecordCheckService/QueryAuditRecordBody",
               "$$ref": "#/definitions/RuleRecordCheckParam"
             }
           }
@@ -3034,7 +3034,7 @@
         ],
         "parameters": [
           {
-            "name": "SystemAuditRecordApiApplyAuditAsyncBody",
+            "name": "/SystemAuditRecordApi/ApplyAuditAsyncBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -3071,7 +3071,7 @@
                   }
                 }
               },
-              "title": "SystemAuditRecordApiApplyAuditAsyncBody",
+              "title": "/SystemAuditRecordApi/ApplyAuditAsyncBody",
               "$$ref": "#/definitions/SystemAuditAsyncCommand"
             }
           }
@@ -3119,7 +3119,7 @@
         ],
         "parameters": [
           {
-            "name": "SystemAuditRecordApiQueryAuditRecordBody",
+            "name": "/SystemAuditRecordApi/QueryAuditRecordBody",
             "in": "body",
             "schema": {
               "type": "object",
@@ -3142,7 +3142,7 @@
                   }
                 }
               },
-              "title": "SystemAuditRecordApiQueryAuditRecordBody",
+              "title": "/SystemAuditRecordApi/QueryAuditRecordBody",
               "$$ref": "#/definitions/SystemAuditRecordParam"
             }
           }

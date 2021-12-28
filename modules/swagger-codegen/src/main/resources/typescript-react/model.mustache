@@ -1,8 +1,15 @@
+// create by generate-service/plugins/typescript-react/model.mustache
 {{>licenseInfo}}
 import type * as models from './models';
 
 {{#models}}
 {{#model}}
+
+{{#isResponse}}
+export type AuditRecordCheckServiceQueryAuditRecordResponseData =
+  models.AuditRecordCheckServiceQueryAuditRecordResponseDataListItem[];
+{{/isResponse}}
+
 /**
 {{#description}}
   * @description {{&description}}

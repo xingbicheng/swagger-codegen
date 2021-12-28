@@ -1,3 +1,4 @@
+// create by generate-service/plugins/typescript-react/api.mustache
 {{>licenseInfo}}
 import request from '@/utils/midway-request';
 {{^models.isEmpty}}
@@ -25,17 +26,17 @@ import type * as models from '../model/models';
    {{#description}}
    * @description {{&description}}
    {{/description}}
-   {{#allParams.0}}{{^hasOnlyBodyParams}}* @param params Params{{nickname}}{{/hasOnlyBodyParams}}{{/allParams.0}}
-   {{#bodyParam}}* @param param: Params{{nickname}}{{#description}}// {{&description}}{{/description}}{{/bodyParam}}
+   {{#bodyParam}}* @param param: ParamsBody{{#titlecase}}{{operationName}}{{/titlecase}}{{#description}}// {{&description}}{{/description}}{{/bodyParam}}
    * @returns {{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}
    */
-   export const {{nickname}} =
+   export const {{operationName}} =
     async (
-      param: Params{{#titlecase}}{{nickname}}{{/titlecase}},
+      {{#bodyParam}}param: ParamsBody{{#titlecase}}{{operationName}}{{/titlecase}}{{/bodyParam}}
     ) => {
+      
       const path = '';
       const url = basePath + path;
-      return request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}>(
+      return request<{{#returnType}}{{{returnType}}}{{/returnType}}{{^returnType}}{}{{/returnType}}Data>(
         {
           url,
           data: { param },

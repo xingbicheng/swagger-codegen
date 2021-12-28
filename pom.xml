@@ -244,6 +244,13 @@
                     </execution>
                 </executions>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
         </plugins>
         <pluginManagement>
             <plugins>
@@ -274,7 +281,7 @@
                                 </goals>
                             </execution>
                         </executions>
-                        <configuration/>
+                        <configuration />
                     </plugin>
                     <plugin>
                         <groupId>org.codehaus.mojo</groupId>
@@ -843,7 +850,7 @@
                 <module>samples/client/petstore/typescript-fetch/tests/default</module>
                 -->
 
-<!--                <module>samples/client/petstore/typescript-node/npm</module>-->
+                <!--                <module>samples/client/petstore/typescript-node/npm</module>-->
                 <!-- comment out due to github rate limit error
                 <module>samples/client/petstore/typescript-angularjs</module>-->
                 <!-- comment out due to error `npm run build`

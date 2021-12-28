@@ -5,6 +5,7 @@ import com.samskivert.mustache.Template;
 import io.swagger.codegen.ignore.CodegenIgnoreProcessor;
 import io.swagger.codegen.languages.AbstractJavaCodegen;
 import io.swagger.codegen.utils.ImplementationVersion;
+import io.swagger.codegen.DefaultCodegen;
 import io.swagger.models.*;
 import io.swagger.models.auth.OAuth2Definition;
 import io.swagger.models.auth.SecuritySchemeDefinition;
@@ -41,6 +42,16 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
     protected String basePathWithoutHost;
     protected String contextPath;
     private Map<String, String> generatorPropertyDefaults = new HashMap<>();
+
+    public static String upperFirstCase(String name) {
+        name = name.substring(0, 1).toUpperCase() + name.substring(1);
+        return name;
+    }
+
+    public static String lowerFirstCase(String name) {
+        name = name.substring(0, 1).toLowerCase() + name.substring(1);
+        return name;
+    }
 
     @Override
     public Generator opts(ClientOptInput opts) {
@@ -432,7 +443,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     LOGGER.info("Model " + name + " not imported due to import mapping");
                     continue;
                 }
-                Model model = definitions.get(name);
+                ResponseModel model = definitions.get(name);
+                // if (name.indexOf("ResponseData") >= 0) {
+                // model.put("isResponseData", true);
+                // }
                 Map<String, Model> modelMap = new HashMap<String, Model>();
                 modelMap.put(name, model);
                 Map<String, Object> models = processModels(config, modelMap, definitions);
@@ -440,6 +454,9 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                     models.put("classname", config.toModelName(name));
                     models.putAll(config.additionalProperties());
                     allProcessedModels.put(name, models);
+                }
+                if (name.indexOf("Response") >= 0 && name.indexOf("ResponseData") < 0) {
+                    models.put("isResponse", true);
                 }
             } catch (Exception e) {
                 String message = "Could not process model '" + name + "'"
@@ -538,6 +555,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 operation.put("basePathWithoutHost", basePathWithoutHost);
                 operation.put("contextPath", contextPath);
                 operation.put("baseName", tag);
+                operation.put("baseNameLowerCase", tag.toLowerCase());
+                operation.put("baseNameCamelCase", DefaultCodegen.camelize(tag));
+                operation.put("baseNameSnakeCase", DefaultCodegen.underscore(tag));
+                operation.put("baseNameLowerFirstCase", DefaultCodegen.camelize(tag, true));
                 operation.put("apiPackage", config.apiPackage());
                 operation.put("modelPackage", config.modelPackage());
                 operation.putAll(config.additionalProperties());
@@ -669,6 +690,20 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
                 operation.put("classVarName", config.toDvaModelVarName(tag));
                 operation.put("importPath", config.toDvaModelImport(tag));
                 operation.put("classFilename", config.toDvaModelFilename(tag));
+
+                // dvaModel 中取对应 serviceName 使用
+                operation.put("baseNameLowerCase", tag.toLowerCase());
+                operation.put("baseNameCamelCase", DefaultCodegen.camelize(tag));
+                operation.put("baseNameSnakeCase", DefaultCodegen.underscore(tag));
+                operation.put("baseNameLowerFirstCase", DefaultCodegen.camelize(tag, true));
+
+                // dvaModel中的关键字
+                String dvaModelName = DefaultCodegen.titleCase(config.toDvaModelName(tag));
+                operation.put("dvaModelName", dvaModelName);
+                operation.put("dvaModelNameLowerCase", dvaModelName.toLowerCase());
+                operation.put("dvaModelNameCamelCase", DefaultCodegen.camelize(dvaModelName));
+                operation.put("dvaModelNameSnakeCase", DefaultCodegen.underscore(dvaModelName));
+                operation.put("dvaModelNameLowerFirstCase", DefaultCodegen.camelize(dvaModelName, true));
 
                 if (!config.vendorExtensions().isEmpty()) {
                     operation.put("vendorExtensions", config.vendorExtensions());
@@ -937,9 +972,13 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
             Json.prettyPrint(bundle);
         }
 
-        bundle.put("dvaModelFolder", config.dvaModelPackage().replace('.', File.separatorChar));
+        Map<String, Object> dvaModels = new HashMap<String, Object>();
+        dvaModels.put("dvaModels", allDvaModels);
+        bundle.put("dvaModelInfo", dvaModels);
+
+        bundle.put("dvaModelFolder", config.dvaModelPackage().replace('.',
+                File.separatorChar));
         bundle.put("dvaModelPackage", config.dvaModelPackage());
-        bundle.put("dvaModels", allOperations);
         return bundle;
     }
 
@@ -1191,6 +1230,10 @@ public class DefaultGenerator extends AbstractGenerator implements Generator {
         Set<String> allImports = new TreeSet<String>();
         for (CodegenOperation op : ops) {
             allImports.addAll(op.imports);
+            // String upperFirstNickname = upperFirstCase(op.nickname);
+            // op.nickname = upperFirstNickname.indexOf(op.baseName) >= 0
+            // ? lowerFirstCase(upperFirstNickname.replace(op.baseName, ""))
+            // : op.nickname;
         }
 
         List<Map<String, String>> imports = new ArrayList<Map<String, String>>();

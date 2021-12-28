@@ -18,7 +18,7 @@ public class CodegenOperation {
             isResponseBinary = false, isResponseFile = false, hasReference = false,
             isRestfulIndex, isRestfulShow, isRestfulCreate, isRestfulUpdate, isRestfulDestroy,
             isRestful, isDeprecated;
-    public String path, testPath, operationId, returnType, httpMethod, returnBaseType,
+    public String path, testPath, operationId, operationName, returnType, httpMethod, returnBaseType,
             returnContainer, summary, unescapedNotes, notes, baseName, defaultResponse, discriminator;
     public List<Map<String, String>> consumes, produces, prioritizedContentTypes;
     public CodegenParameter bodyParam;
@@ -43,6 +43,16 @@ public class CodegenOperation {
     public String operationIdCamelCase; // for class names
     public String operationIdSnakeCase;
 
+    public String baseNameLowerCase; // for markdown documentation
+    public String baseNameCamelCase; // for class names
+    public String baseNameSnakeCase; // a_b_c
+    public String baseNameLowerFirstCase; // 首字母小写
+
+    public String operationNameLowerCase; // for dvaModel
+    public String operationNameCamelCase; // for dvaModel
+    public String operationNameSnakeCase; // for dvaModel
+    public String operationNameLowerFirstCase; // for dvaModel
+
     /**
      * Check if there's at least one parameter
      *
@@ -51,7 +61,7 @@ public class CodegenOperation {
     private static boolean nonempty(List<?> params) {
         return params != null && params.size() > 0;
     }
-    
+
     /**
      * Check if there's at least one body parameter
      *
@@ -199,7 +209,8 @@ public class CodegenOperation {
      * @return true if path act as member
      */
     private boolean isMemberPath() {
-        if (pathParams.size() != 1) return false;
+        if (pathParams.size() != 1)
+            return false;
         String id = pathParams.get(0).baseName;
         return ("/{" + id + "}").equals(pathWithoutBaseName());
     }
@@ -211,8 +222,10 @@ public class CodegenOperation {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
 
         CodegenOperation that = (CodegenOperation) o;
 
@@ -308,35 +321,39 @@ public class CodegenOperation {
             return false;
         if (nickname != null ? !nickname.equals(that.nickname) : that.nickname != null)
             return false;
-        if ( prioritizedContentTypes != null ? !prioritizedContentTypes.equals(that.prioritizedContentTypes) : that.prioritizedContentTypes != null )
+        if (prioritizedContentTypes != null ? !prioritizedContentTypes.equals(that.prioritizedContentTypes)
+                : that.prioritizedContentTypes != null)
             return false;
-        if ( operationIdOriginal != null ? !operationIdOriginal.equals(that.operationIdOriginal) : that.operationIdOriginal != null )
+        if (operationIdOriginal != null ? !operationIdOriginal.equals(that.operationIdOriginal)
+                : that.operationIdOriginal != null)
             return false;
-        if ( operationIdLowerCase != null ? !operationIdLowerCase.equals(that.operationIdLowerCase) : that.operationIdLowerCase != null )
+        if (operationIdLowerCase != null ? !operationIdLowerCase.equals(that.operationIdLowerCase)
+                : that.operationIdLowerCase != null)
             return false;
-        return operationIdCamelCase != null ? operationIdCamelCase.equals(that.operationIdCamelCase) : that.operationIdCamelCase == null;
+        return operationIdCamelCase != null ? operationIdCamelCase.equals(that.operationIdCamelCase)
+                : that.operationIdCamelCase == null;
 
     }
 
     @Override
     public int hashCode() {
         int result = responseHeaders.hashCode();
-        result = 31 * result + (hasAuthMethods ? 13:31);
-        result = 31 * result + (hasConsumes ? 13:31);
-        result = 31 * result + (hasProduces ? 13:31);
-        result = 31 * result + (hasParams ? 13:31);
-        result = 31 * result + (hasOptionalParams ? 13:31);
-        result = 31 * result + (returnTypeIsPrimitive ? 13:31);
-        result = 31 * result + (returnSimpleType ? 13:31);
-        result = 31 * result + (subresourceOperation ? 13:31);
-        result = 31 * result + (isMapContainer ? 13:31);
-        result = 31 * result + (isListContainer ? 13:31);
-        result = 31 * result + (isMultipart ? 13:31);
-        result = 31 * result + (hasMore ? 13:31);
-        result = 31 * result + (isResponseBinary ? 13:31);
-        result = 31 * result + (isResponseFile ? 13:31);
-        result = 31 * result + (hasReference ? 13:31);
-        result = 31 * result + (isDeprecated ? 13:31);
+        result = 31 * result + (hasAuthMethods ? 13 : 31);
+        result = 31 * result + (hasConsumes ? 13 : 31);
+        result = 31 * result + (hasProduces ? 13 : 31);
+        result = 31 * result + (hasParams ? 13 : 31);
+        result = 31 * result + (hasOptionalParams ? 13 : 31);
+        result = 31 * result + (returnTypeIsPrimitive ? 13 : 31);
+        result = 31 * result + (returnSimpleType ? 13 : 31);
+        result = 31 * result + (subresourceOperation ? 13 : 31);
+        result = 31 * result + (isMapContainer ? 13 : 31);
+        result = 31 * result + (isListContainer ? 13 : 31);
+        result = 31 * result + (isMultipart ? 13 : 31);
+        result = 31 * result + (hasMore ? 13 : 31);
+        result = 31 * result + (isResponseBinary ? 13 : 31);
+        result = 31 * result + (isResponseFile ? 13 : 31);
+        result = 31 * result + (hasReference ? 13 : 31);
+        result = 31 * result + (isDeprecated ? 13 : 31);
         result = 31 * result + (path != null ? path.hashCode() : 0);
         result = 31 * result + (operationId != null ? operationId.hashCode() : 0);
         result = 31 * result + (returnType != null ? returnType.hashCode() : 0);
